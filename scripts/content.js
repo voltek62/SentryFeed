@@ -150,6 +150,9 @@ async function checkForCringe(post) {
 
         const data = await response.json();
         const isCringe = data.choices[0].message.content.toLowerCase().includes('true');
+        if (isCringe) {
+            cringeGuardThisPost(post);
+        }
         return isCringe;
     } catch (error) {
         console.error('Error checking post:', error);
@@ -163,10 +166,7 @@ function cringeGuardExistsingPosts() {
     const posts = document.querySelectorAll('.update-components-update-v2__commentary');
     for (const post of posts) {
         // Adding a debounced wrapper if as I'm calling this frequently
-        const isCringe = debouncedCheckForCringe(post);
-        if (isCringe) {
-            cringeGuardThisPost(post);
-        }
+        debouncedCheckForCringe(post);
     }
 }
 
