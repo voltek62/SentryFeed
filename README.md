@@ -4,7 +4,7 @@ Control your LinkedIn feed with an LLM of your choice. A chrome extension that f
 
 ## Demo
 
-![Cringe Guard Demo Video](./images/cringe-guard-demo.gif)
+![Cringe Guard Demo Video](./images/demo-cringe-guard.gif)
 
 ## How it works?
 
