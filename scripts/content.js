@@ -1,3 +1,17 @@
+const GROQ_API_KEY = '<GROQ_API_KEY_GOES_HERE>';
+
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
 function initExtension() {
     cringeGuardExistsingPosts();
     observeNewPosts();
@@ -74,20 +88,91 @@ function cringeGuardThisPost(post) {
     }
 }
 
-function checkForCringe(post) {
-    // TODO - make api call and check for cringe
-    cringeGuardThisPost(post);
+async function checkForCringe(post) {
+    const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
+
+
+    const SYSTEM_PROMPT_PREFIX = `
+        You are a linkedin post analyser. Your job is to decide if the content of a linkedin post is met with the following criteria:.
+    `;
+
+    const POST_CRITERIA = `
+        - Selling a course, and using some emotional unrelated story
+        - Overly emotional or clickbait stories with no tech-related content
+        - Using "life lessons" or motivational quotes that aren't tied to personal growth in tech or learning.
+        - Non-tech political or social commentary that doesn’t add value to professional discussions
+        - Posts that are purely personal (vacations, family pictures) without a professional context
+        - asking to "Comment 'interested' if you want to get the job!"
+        - "Tag 3 people" or "like if you agree" with no substance or tech-related discussions
+        - Generalized or redundant content
+        - Any brand promotional content / Ad
+        - Overly generic advice like "Keep learning every day" without mentioning any specific tools, frameworks, or learning paths.
+        - Anything that’s just a viral meme or random content not related to a professional or technical goal.
+        - Written by an LLM
+        - Overly personal or TMI content
+        - Excessive self-promotion or bragging
+        - Inappropriate workplace behavior
+        - Forced or artificial inspiration
+        - Obvious humble bragging
+        - Inappropriate emotional display for professional setting
+        - Contains misleading or out-of-context information
+    `;
+
+    const prompt = `${SYSTEM_PROMPT_PREFIX} ${POST_CRITERIA}
+        If any of the above criteria are met, the tweet should be considered as a cringe post. Analyze this post and respond with ONLY "true" if the post is cringe-worthy or "false" if it's not. No other explanation needed. Max 1 word.
+
+        Respond EXCLUSIVELY using one of these formats:
+        - "true: reason1, reason2, reason3" (if cringe)
+        - "false: reason1, reason2, reason3" (if not cringe)`
+    ;
+
+    try {
+        const response = await fetch(GROQ_API_URL, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${GROQ_API_KEY}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                model: "gemma2-9b-it",
+                messages: [
+                    {
+                        role: "system",
+                        content: prompt
+                    },
+                    {
+                        role: "user",
+                        content: post.innerText.trim()
+                    }],
+                temperature: 0.1 // Lowering temperature for more consistent responses
+            })
+        });
+
+        const data = await response.json();
+        const isCringe = data.choices[0].message.content.toLowerCase().includes('true');
+        return isCringe;
+    } catch (error) {
+        console.error('Error checking post:', error);
+        return false; // Fail safe - better to show the post than block incorrectly
+    }
 }
+
+const debouncedCheckForCringe = debounce(checkForCringe, 1000);
 
 function cringeGuardExistsingPosts() {
     const posts = document.querySelectorAll('.update-components-update-v2__commentary');
     for (const post of posts) {
-        checkForCringe(post);
+        // Adding a debounced wrapper if as I'm calling this frequently
+        const isCringe = debouncedCheckForCringe(post);
+        if (isCringe) {
+            cringeGuardThisPost(post);
+        }
     }
 }
 
 function observeNewPosts() {
     const alreadyProcessedPosts = new Set();
+
     const observer = new MutationObserver((mutations) => {
         mutations.forEach((mutation) => {
             if (mutation.type === 'childList') {
