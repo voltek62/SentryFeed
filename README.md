@@ -30,11 +30,11 @@ To run the Cringe-Guard Chrome extension on your local machine, follow these ste
 - Select the folder where the extension files are located (`cringe-guard` folder).
 
 ## TODO
-- Refactor the codebase a bit
-- Allow users to input API key through a simple interface in popup.html.
-- Enable custom post filters, letting users choose which posts to show or hide via UI
-- Persist user settings (API key and filters) using Chrome Storage API.
-- Test cross-browser compatibility
+- [ ] Refactor the codebase a bit
+- [x] Allow users to input API key through a simple interface in popup.html.
+- [ ] Enable custom post filters, letting users choose which posts to show or hide via UI
+- [ ] Persist user settings (API key and filters) using Chrome Storage API.
+- [ ] Test cross-browser compatibility
 
 ## Built with ❤️ by
 
