@@ -25,6 +25,7 @@
         "default_title": "Cringe Guard"
     },
     "permissions": [
-        "activeTab"
+        "activeTab",
+        "storage" 
     ]
 }

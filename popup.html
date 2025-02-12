@@ -1,9 +1,33 @@
 <!DOCTYPE html>
-<html>
-  <head> </head>
-  <body>
-    <div class="main">
-      <h1>Cringe Guard</h1>
-    </div>
-  </body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cringe Guard Settings</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            width: 300px;
+            padding: 20px;
+        }
+        input, button {
+          width: calc(100% - 16px); 
+          padding: 8px;
+          margin: 5px 0;
+          box-sizing: border-box; 
+        }
+    </style>
+</head>
+<body>
+    <h1>Cringe Guard</h1>
+
+    <!-- API Key Input -->
+    <label for="apiKey">Groq API Key </label>
+    <input type="text" id="apiKey" placeholder="Enter API Key">
+    <button id="saveApiKey">Save API Key</button>
+    <p id="statusMessage" style="color: green;"></p>
+
+    <script src="scripts/popup.js"></script>
+</body>
 </html>
