@@ -38,6 +38,7 @@ To run the Cringe-Guard Chrome extension on your local machine, follow these ste
 - Persist user settings (API key and filters) using Chrome Storage API.
 - Test cross-browser compatibility
 - Bug: The extension is unexpectedly logging `GET chrome-extension://invalid/ net::ERR_FAILED` in the console for some reason.
+- Redesign the logo to better reflect the purpose of the extension
 
 ## Built with ❤️ by
 
