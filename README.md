@@ -32,9 +32,12 @@ To run the Cringe-Guard Chrome extension on your local machine, follow these ste
 ## TODO
 - Refactor the codebase a bit
 - Allow users to input API key through a simple interface in popup.html.
+- Provide users with the option to either blur or completely remove content from the DOM.
+- In addition to analyzing the text content of posts, automatically detect and remove posts with "Promoted" tags by default.
 - Enable custom post filters, letting users choose which posts to show or hide via UI
 - Persist user settings (API key and filters) using Chrome Storage API.
 - Test cross-browser compatibility
+- Bug: The extension is unexpectedly logging `GET chrome-extension://invalid/ net::ERR_FAILED` in the console for some reason.
 
 ## Built with ❤️ by
 
