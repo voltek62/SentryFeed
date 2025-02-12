@@ -4,7 +4,7 @@ function getApiKey() {
             if (data.groqApiKey) {
                 resolve(data.groqApiKey);
             } else {
-                console.warn("GROQ API key not found in storage!");
+                console.warn("GROQ API key not found. Please set your API key in the extension settings.");
                 resolve(null);
             }
         });
@@ -27,7 +27,7 @@ async function initExtension() {
 
     const apiKey = await getApiKey();
     if (!apiKey) {
-        console.warn("Skipping post observation due to missing API key.");
+        console.warn("GROQ API key not found. Please set your API key in the extension settings.");
         return; // Stop execution if no API key
     }
 
@@ -124,10 +124,12 @@ async function checkForCringe(post) {
     `;
 
     const prompt = `${SYSTEM_PROMPT_PREFIX} ${POST_CRITERIA}
-        If any criteria are met, respond with:
+        If any of the above criteria are met, the tweet should be considered as a cringe post. Analyze this post and respond with ONLY "true" if the post is cringe-worthy or "false" if it's not. No other explanation needed. Max 1 word.
+
+        Respond EXCLUSIVELY using one of these formats:
         - "true: reason1, reason2, reason3" (if cringe)
-        - "false: reason1, reason2, reason3" (if not cringe)
-    `;
+        - "false: reason1, reason2, reason3" (if not cringe)`
+    ;
 
     try {
         const response = await fetch(GROQ_API_URL, {
