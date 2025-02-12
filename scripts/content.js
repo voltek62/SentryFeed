@@ -23,7 +23,14 @@ function debounce(func, wait) {
     };
 }
 
-function initExtension() {
+async function initExtension() {
+
+    const apiKey = await getApiKey();
+    if (!apiKey) {
+        console.warn("Skipping post observation due to missing API key.");
+        return; // Stop execution if no API key
+    }
+
     cringeGuardExistingPosts();
     observeNewPosts();
 }
@@ -95,19 +102,25 @@ async function checkForCringe(post) {
     `;
 
     const POST_CRITERIA = `
-        - Selling a course with an emotional story
-        - Clickbait or overly emotional stories
-        - Generic life lessons without tech relevance
-        - Non-tech political or social commentary
-        - Personal posts with no professional context
-        - Asking users to comment "interested" to get a job
-        - Tagging people for engagement without substance
-        - Generic advice without specifics
-        - Promotional brand content or ads
-        - Meme posts unrelated to tech or professional growth
-        - LLM-generated text
-        - Humble bragging or forced inspiration
-        - Misleading information
+        - Selling a course, and using some emotional unrelated story
+        - Overly emotional or clickbait stories with no tech-related content
+        - Using "life lessons" or motivational quotes that aren't tied to personal growth in tech or learning.
+        - Non-tech political or social commentary that doesn’t add value to professional discussions
+        - Posts that are purely personal (vacations, family pictures) without a professional context
+        - asking to "Comment 'interested' if you want to get the job!"
+        - "Tag 3 people" or "like if you agree" with no substance or tech-related discussions
+        - Generalized or redundant content
+        - Any brand promotional content / Ad
+        - Overly generic advice like "Keep learning every day" without mentioning any specific tools, frameworks, or learning paths.
+        - Anything that’s just a viral meme or random content not related to a professional or technical goal.
+        - Written by an LLM
+        - Overly personal or TMI content
+        - Excessive self-promotion or bragging
+        - Inappropriate workplace behavior
+        - Forced or artificial inspiration
+        - Obvious humble bragging
+        - Inappropriate emotional display for professional setting
+        - Contains misleading or out-of-context information
     `;
 
     const prompt = `${SYSTEM_PROMPT_PREFIX} ${POST_CRITERIA}
@@ -129,7 +142,7 @@ async function checkForCringe(post) {
                     { role: "system", content: prompt },
                     { role: "user", content: post.innerText.trim() }
                 ],
-                temperature: 0.1
+                temperature: 0.1 // Lowering temperature for more consistent responses
             })
         });
 
