@@ -2,8 +2,8 @@
     "manifest_version": 3,
     "name": "cringe-guard",
     "author": "Pankaj Tanwar",
-    "version": "0.0.1",
-    "description": "A prototype chrome extension that filters out cringe content on my LinkedIn feed.",
+    "version": "0.0.2",
+    "description": "A chrome extension that filters out cringe content on my LinkedIn feed.",
     "content_scripts": [
         {
             "js": [
@@ -21,11 +21,12 @@
         "128": "images/icon.png"
     },
     "action": {
-        "default_popup": "popup.html",
+        "default_popup": "./pages/popup.html",
         "default_title": "Cringe Guard"
     },
+    "options_page": "./pages/settings.html",
     "permissions": [
         "activeTab",
-        "storage" 
+        "storage"
     ]
 }

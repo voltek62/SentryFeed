@@ -1,10 +1,10 @@
-function getApiKey() {
+function getApiKeyIfEnabled() {
     return new Promise((resolve) => {
-        chrome.storage.sync.get("groqApiKey", (data) => {
-            if (data.groqApiKey) {
+        chrome.storage.sync.get(["groqApiKey", "isEnabled"], (data) => {
+            if (data.isEnabled && data.groqApiKey) {
                 resolve(data.groqApiKey);
             } else {
-                console.warn("GROQ API key not found. Please set your API key in the extension settings.");
+                console.warn("GROQ API key not found or extension is disabled.");
                 resolve(null);
             }
         });
@@ -24,8 +24,7 @@ function debounce(func, wait) {
 }
 
 async function initExtension() {
-
-    const apiKey = await getApiKey();
+    const apiKey = await getApiKeyIfEnabled();
     if (!apiKey) {
         console.warn("GROQ API key not found. Please set your API key in the extension settings.");
         return; // Stop execution if no API key
@@ -33,6 +32,27 @@ async function initExtension() {
 
     cringeGuardExistingPosts();
     observeNewPosts();
+}
+
+function estimateTimeSavedInSeconds(postText) {
+    const wordCount = postText.split(/\s+/).length;
+
+    if (wordCount <= 20) return 5;   // Short posts (~5 sec saved)
+    if (wordCount <= 50) return 10;  // Medium posts (~10 sec saved)
+    return 20;                       // Long posts (~20 sec saved)
+}
+
+function updateCringeStats(postText) {
+    chrome.storage.sync.get(["cringeCount", "timeSavedInMinutes"], (data) => {
+        const newCount = (data.cringeCount || 0) + 1;
+        const estimatedTimeSavedInSeconds = estimateTimeSavedInSeconds(postText);
+
+        const newTimeSavedInMinutes = parseFloat(data.timeSavedInMinutes || 0) + estimatedTimeSavedInSeconds / 60; // Convert to minutes
+
+        chrome.storage.sync.set({ cringeCount: newCount, timeSavedInMinutes: newTimeSavedInMinutes }, () => {
+            // console.log(`Cringe count: ${newCount}, Time saved: ${newTimeSavedInMinutes} min`);
+        });
+    });
 }
 
 function cringeGuardThisPost(post) {
@@ -94,7 +114,7 @@ function cringeGuardThisPost(post) {
 
 async function checkForCringe(post) {
     const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
-    const apiKey = await getApiKey();
+    const apiKey = await getApiKeyIfEnabled();
     if (!apiKey) return; // Stop execution if no API key
 
     const SYSTEM_PROMPT_PREFIX = `
@@ -129,7 +149,7 @@ async function checkForCringe(post) {
         Respond EXCLUSIVELY using one of these formats:
         - "true: reason1, reason2, reason3" (if cringe)
         - "false: reason1, reason2, reason3" (if not cringe)`
-    ;
+        ;
 
     try {
         const response = await fetch(GROQ_API_URL, {
@@ -152,6 +172,7 @@ async function checkForCringe(post) {
         const isCringe = data.choices[0].message.content.toLowerCase().includes('true');
         if (isCringe) {
             cringeGuardThisPost(post);
+            updateCringeStats(post.innerText);
         }
         return isCringe;
     } catch (error) {
