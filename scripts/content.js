@@ -49,9 +49,7 @@ function updateCringeStats(postText) {
 
         const newTimeSavedInMinutes = parseFloat(data.timeSavedInMinutes || 0) + estimatedTimeSavedInSeconds / 60; // Convert to minutes
 
-        chrome.storage.sync.set({ cringeCount: newCount, timeSavedInMinutes: newTimeSavedInMinutes }, () => {
-            // console.log(`Cringe count: ${newCount}, Time saved: ${newTimeSavedInMinutes} min`);
-        });
+        chrome.storage.sync.set({ cringeCount: newCount, timeSavedInMinutes: newTimeSavedInMinutes });
     });
 }
 
