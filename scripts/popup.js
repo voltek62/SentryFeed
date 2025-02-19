@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Load initial state from Chrome storage
     chrome.storage.sync.get("isEnabled", function (data) {
-        toggleSwitch.checked = data.isEnabled ?? true; // Default to true
+        toggleSwitch.checked = data.isEnabled ?? false; // Default to false
     });
 
     // Listen for toggle changes
