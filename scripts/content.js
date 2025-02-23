@@ -142,12 +142,7 @@ async function checkForCringe(post) {
     `;
 
     const prompt = `${SYSTEM_PROMPT_PREFIX} ${POST_CRITERIA}
-        If any of the above criteria are met, the tweet should be considered as a cringe post. Analyze this post and respond with ONLY "true" if the post is cringe-worthy or "false" if it's not. No other explanation needed. Max 1 word.
-
-        Respond EXCLUSIVELY using one of these formats:
-        - "true: reason1, reason2, reason3" (if cringe)
-        - "false: reason1, reason2, reason3" (if not cringe)`
-        ;
+        If any of the above criteria are met, the post should be considered as a cringe post.`;
 
     try {
         const response = await fetch(GROQ_API_URL, {
@@ -160,14 +155,14 @@ async function checkForCringe(post) {
                 model: "gemma2-9b-it",
                 messages: [
                     { role: "system", content: prompt },
-                    { role: "user", content: post.innerText.trim() }
+                    { role: "user", content: "Linkedin Post:\n\n" + post.innerText.trim() + "\n\nVery briefly list if the post matches any of the defined cringe criteria. If none, conclude with POST_IS_NOT_CRINGE otherwise POST_IS_CRINGE." }
                 ],
                 temperature: 0.1 // Lowering temperature for more consistent responses
             })
         });
 
         const data = await response.json();
-        const isCringe = data.choices[0].message.content.toLowerCase().includes('true');
+        const isCringe = data.choices[0].message.content.toLowerCase().includes('POST_IS_CRINGE');
         if (isCringe) {
             cringeGuardThisPost(post);
             updateCringeStats(post.innerText);
