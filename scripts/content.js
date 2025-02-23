@@ -162,7 +162,7 @@ async function checkForCringe(post) {
         });
 
         const data = await response.json();
-        const isCringe = data.choices[0].message.content.toLowerCase().includes('POST_IS_CRINGE');
+        const isCringe = data.choices[0].message.content.toLowerCase().includes('post_is_cringe');
         if (isCringe) {
             cringeGuardThisPost(post);
             updateCringeStats(post.innerText);
