@@ -4,9 +4,6 @@ Control your LinkedIn/X feed with an LLM of your choice. A chrome extension that
 
 This prototype demonstrates how AI can empower us to have more control over the content we consume.
 
-## Demo
-
-![Cringe Guard Demo Video](./images/demo-cringe-guard.gif)
 
 ## How it works?
 
