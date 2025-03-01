@@ -31,7 +31,7 @@ To run the SentryFeed Chrome extension on your local machine, follow these steps
 
 ## Contributing
 
-I welcome contributions to the `cringe-guard` project! Whether it's a bug fix, a feature request, or improving documentation, your contributions are appreciated.
+I welcome contributions to the project! Whether it's a bug fix, a feature request, or improving documentation, your contributions are appreciated.
 
 > Thanks to
 - [Unbaited](https://github.com/danielpetho/unbaited) for the inspiration.
