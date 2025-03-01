@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // toggle swish for cringe guard
+    // toggle swish for SentryFeed
     const toggleSwitch = document.getElementById("toggle-switch");
 
     // Load initial state from Chrome storage
