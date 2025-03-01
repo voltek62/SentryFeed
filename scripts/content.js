@@ -113,35 +113,22 @@ function cringeGuardThisPost(post) {
 async function checkForCringe(post) {
     const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
     const apiKey = await getApiKeyIfEnabled();
-    if (!apiKey) return; // Stop execution if no API key
+    if (!apiKey) return;
+
+    // Récupérer les critères personnalisés
+    const criteria = await new Promise((resolve) => {
+        chrome.storage.sync.get("cringe_criteria", (data) => {
+            resolve(data.cringe_criteria || []);
+        });
+    });
 
     const SYSTEM_PROMPT_PREFIX = `
-        You are a LinkedIn post analyzer. Your job is to determine if a post meets the following criteria:
+        You are a LinkedIn post analyzer. Your job is to determine if a post meets any of the following criteria:
     `;
 
-    const POST_CRITERIA = `
-        - Selling a course, and using some emotional unrelated story
-        - Overly emotional or clickbait stories with no tech-related content
-        - Using "life lessons" or motivational quotes that aren't tied to personal growth in tech or learning.
-        - Non-tech political or social commentary that doesn’t add value to professional discussions
-        - Posts that are purely personal (vacations, family pictures) without a professional context
-        - asking to "Comment 'interested' if you want to get the job!"
-        - "Tag 3 people" or "like if you agree" with no substance or tech-related discussions
-        - Generalized or redundant content
-        - Any brand promotional content / Ad
-        - Overly generic advice like "Keep learning every day" without mentioning any specific tools, frameworks, or learning paths.
-        - Anything that’s just a viral meme or random content not related to a professional or technical goal.
-        - Written by an LLM
-        - Overly personal or TMI content
-        - Excessive self-promotion or bragging
-        - Inappropriate workplace behavior
-        - Forced or artificial inspiration
-        - Obvious humble bragging
-        - Inappropriate emotional display for professional setting
-        - Contains misleading or out-of-context information
-    `;
+    const criteriaText = criteria.map(c => `- ${c}`).join('\n');
 
-    const prompt = `${SYSTEM_PROMPT_PREFIX} ${POST_CRITERIA}
+    const prompt = `${SYSTEM_PROMPT_PREFIX}\n${criteriaText}\n
         If any of the above criteria are met, the post should be considered as a cringe post.`;
 
     try {
