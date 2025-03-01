@@ -10,8 +10,11 @@
                 "scripts/content.js"
             ],
             "matches": [
-                "https://www.linkedin.com/feed/*"
-            ]
+                "*://www.linkedin.com/*",
+                "*://x.com/*",
+                "*://twitter.com/*"
+            ],
+            "run_at": "document_idle"
         }
     ],
     "icons": {
@@ -26,6 +29,9 @@
     },
     "options_page": "./pages/settings.html",
     "permissions": [
+        "*://www.linkedin.com/*",
+        "*://x.com/*",
+        "*://twitter.com/*",
         "storage"
     ]
 }
