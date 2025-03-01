@@ -65,10 +65,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const criteriaSection = document.createElement("div");
     criteriaSection.className = "criteria-section";
     criteriaSection.innerHTML = `
-        <h3>Critères de détection</h3>
+        <h3>Detection Criteria</h3>
         <div id="criteria-list"></div>
-        <button id="add-criterion">Ajouter un critère</button>
-        <button id="reset-criteria">Réinitialiser les critères</button>
+        <button id="add-criterion">Add Criterion</button>
+        <button id="reset-criteria">Reset Criteria</button>
     `;
 
     document.querySelector(".api-key-section").after(criteriaSection);
