@@ -10,7 +10,7 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             margin: 0;
             padding: 0;
-            background: #0077b5;
+            background: #2563eb;
             color: #1f2937;
             min-height: 100vh;
             display: flex;
@@ -21,7 +21,7 @@
         .container {
             background: white;
             border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
             width: 90%;
             max-width: 600px;
             padding: 24px;
@@ -38,7 +38,7 @@
         .logo {
             font-size: 24px;
             font-weight: 600;
-            color: #0077b5;
+            color: #1e40af;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -47,7 +47,7 @@
         .logo-icon {
             width: 28px;
             height: 28px;
-            background: #0077b5;
+            background: #1e40af;
             border-radius: 6px;
             display: flex;
             align-items: center;
@@ -62,12 +62,11 @@
             padding: 8px;
             border-radius: 50%;
             transition: all 0.2s;
-            color: #0077b5;
+            color: #1e40af;
         }
 
         .settings-icon:hover {
-            background-color: rgba(0, 119, 181, 0.1);
-            transform: rotate(30deg);
+            background-color: #dbeafe;
         }
 
         .card {
@@ -76,7 +75,7 @@
 
         .card h2 {
             font-size: 20px;
-            color: #0077b5;
+            color: #1e40af;
             margin-bottom: 16px;
         }
 
@@ -93,12 +92,11 @@
             margin-bottom: 8px;
         }
 
-
         .api-key-section input {
             flex: 1;
             /* Makes the input take up remaining space */
             padding: 10px;
-            border: 1px solid #e5e7eb;
+            border: 1px solid #e2e8f0;
             border-radius: 8px;
             font-size: 14px;
             color: #1f2937;
@@ -109,7 +107,7 @@
         }
 
         .api-key-section button {
-            background: #0077b5;
+            background: #1e40af;
             color: white;
             border: none;
             padding: 10px 16px;
@@ -122,21 +120,21 @@
         }
 
         .api-key-section button:hover {
-            background: #005f8a;
+            background: #1e3a8a;
         }
 
         .instructions {
             font-size: 14px;
             color: #666;
             line-height: 1.6;
-            background: #f1f6f9;
+            background: #f0f9ff;
             padding: 12px 16px;
             border-radius: 8px;
             margin-bottom: 24px;
         }
 
         .instructions a {
-            color: #0077b5;
+            color: #1e40af;
             text-decoration: none;
             font-weight: 500;
         }
@@ -161,20 +159,20 @@
         }
 
         .footer a {
-            color: #005f8a;
+            color: #1e40af;
             font-weight: 600;
             text-decoration: none;
             transition: color 0.2s ease-in-out;
         }
 
         .footer a:hover {
-            color: #003f5e;
+            color: #1e3a8a;
             text-decoration: underline;
         }
 
         .success-message {
             font-size: 14px;
-            color: #0077b5;
+            color: #1e40af;
             margin-top: 8px;
             font-weight: 500;
             display: none;
@@ -187,7 +185,6 @@
     <div class="container">
         <div class="header">
             <div class="logo">
-                <div class="logo-icon">CG</div>
                 Sentry Feed - Settings
             </div>
             <svg class="settings-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -227,8 +224,7 @@
         </div>
 
         <div class="footer">
-            <p>Open-source with ❤️ by <a href="https://twitter.com/the2ndfloorguy" target="_blank">Pankaj Tanwar</a></p>
-            <p>Contribute on <a href="https://github.com/Pankajtanwarbanna/cringe-guard" target="_blank">GitHub</a>.</p>
+            <p>Open-source by <a href="https://twitter.com/the2ndfloorguy" target="_blank">Pankaj Tanwar</a></p>
         </div>
     </div>
 

@@ -32,4 +32,4 @@ I welcome contributions to the project! Whether it's a bug fix, a feature reques
 
 > Thanks to
 - [Unbaited](https://github.com/danielpetho/unbaited) for the inspiration.
-- [Pankaj Tanwar](https://twitter.com/the2ndfloorguy), and checkout his [other side-hustles](https://pankajtanwar.in/side-hustles)
+- [Pankaj Tanwar](https://twitter.com/the2ndfloorguy)
