@@ -2,11 +2,11 @@
 Effective Date: 26th Feb 2025  
 
 **Data Collection**  
-SentryFeed does not collect, store, or share any personal data. The extension processes LinkedIn posts in real-time within your browser to determine whether they match filtering criteria. No user data, login credentials, or browsing history is collected.  
+SentryFeed does not collect, store, or share any personal data. The extension processes LinkedIn/X posts in real-time within your browser to determine whether they match filtering criteria. No user data, login credentials, or browsing history is collected.  
 
 **API Usage**  
 When you use SentryFeed:  
-- The content of LinkedIn posts is sent to Groq's API for analysis to determine relevance.  
+- The content of LinkedIn/X posts is sent to Groq's API for analysis to determine relevance.  
 - Your API key is stored locally in your browser and is never transmitted elsewhere.  
 - The extension does not store or retain any analyzed data after processing.  
 
@@ -16,7 +16,7 @@ SentryFeed relies on Groq's API to analyze LinkedIn/X posts and classify content
 **Permissions Justification**  
 - **activeTab**: Needed to analyze and modify the LinkedIn feed in real-time.  
 - **storage**: Used to save user preferences, such as filtering settings and API configurations.  
-- **host permissions (linkedin.com)**: Required to read and process LinkedIn content for filtering purposes.  
+- **host permissions (linkedin.com, x.com)**: Required to read and process LinkedIn/X content for filtering purposes.  
 
 **Security Measures**  
 - The extension does not execute remote code or store external scripts.  
