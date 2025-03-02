@@ -24,7 +24,7 @@ To run the SentryFeed Chrome extension on your local machine, follow these steps
 - Open Chrome browser and navigate to the Extensions page by typing `chrome://extensions/` in the URL bar.
 - Enable Developer Mode in the top-right corner.
 - Click on the Load unpacked button.
-- Select the folder where the extension files are located (`cringe-guard` folder).
+- Select the folder where the extension files are located (`SentryFeed` folder).
 
 ## Contributing
 
